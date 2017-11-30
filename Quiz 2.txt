@@ -1,0 +1,148 @@
+#!/usr/bin/perl
+
+## Assignment: CIS 140 Quiz 2
+## Author: William Dole
+## Version: 1.0
+## Purpose: Find total experience between employees per department
+
+use 5.16.3;
+use strict;
+use warnings;
+
+my @employees;
+my ($continue,$EID,$serviceYears,$deptNumber,$department,$checkDept);
+use constant YES => 1;
+
+sub main {
+        setContinue();
+        while ($continue == YES) {
+                setDepartment();
+                $checkDept = 1;
+                while ($checkDept == YES) {
+                        addEmployee();
+                        enterService();
+                        populateArray();
+                        checkDepartment();
+                }
+                printService();
+                setContinue();
+        }
+}
+
+main();
+
+sub setContinue {
+        if (defined $continue) {
+                $continue = -1;
+                while ($continue !~ /[0-9]/ || $continue < 0 || $continue > 1) {
+                        say "Would you like to continue?";
+                        say "Please enter 1 for yes or 0 for no.";
+                        chomp ($continue = <STDIN>);
+                        if ($continue !~ /[0-9]/ || $continue < 0 || $continue > 1) {
+                                say "\nINVALID INPUT";
+                                sleep 2;
+                                system ("clear");
+                        }
+                }
+        } else {
+                $continue = 1
+        }
+        system ("clear")
+}
+
+sub checkDepartment {
+        $checkDept = -1;
+        while ($checkDept !~ /[0-9]/ || $checkDept < 0 || $checkDept > 1) {
+                say "Do you want to add more employees to department $department?";
+                say "Please enter 1 for yes or 0 for no.";
+                chomp ($checkDept = <STDIN>);
+                if ($checkDept !~ /[0-9]/ || $checkDept < 0 || $checkDept > 1) {
+                        say "\nINVALID INPUT";
+                        sleep 2;
+                        system ("clear");
+                }
+        }
+        system ("clear")
+}
+
+sub setDepartment {
+        $department = -1;
+        while ($department !~ /[0-9]/ || $department < 1 || $department > 10) {
+                say "Please say which department (1-10) you want to use.";
+                chomp ($department = <STDIN>);
+                if ($department !~ /[0-9]/ || $department < 1 || $department > 10) {
+                        say "INVALID INPUT";
+                        sleep 2;
+                        system ("clear");
+                }
+        }
+        system ("clear")
+}
+
+sub addEmployee {
+        my $check = -1;
+        $EID = -1;
+        while ($check != YES) {
+                while ($EID !~ /[0-9]/ || $EID < 1 || $EID > 5000) {
+                        say "Please enter employee's ID number.";
+                        chomp ($EID = <STDIN>);
+                        if ($EID !~ /[0-9]/ || $EID < 1 || $EID > 5000) {
+                                say "\nINVALID INPUT";
+                                sleep 2;
+                                system ("clear");
+                        }
+                }
+                my $i = 0;
+                while (defined $employees[$i][0]) {
+                        if ($employees[$i][0] == $EID) {
+                                say "\nEmployee already entered.";
+                                $EID = -1;
+                                sleep 2;
+                                system ("clear");
+                        }
+                        $i++;
+                }
+                if ($EID != -1) {
+                        $check = 1;
+                }
+        }
+        system ("clear");
+}
+
+sub enterService {
+        $serviceYears = -1;
+        while ($serviceYears !~ /[0-9]/ || $serviceYears < 1 || $serviceYears > 40) {
+                say "Please enter how many years employee has worked for the company.";
+                chomp ($serviceYears = <STDIN>);
+                if ($serviceYears !~ /[0-9]/ || $serviceYears < 1 || $serviceYears > 40) {
+                        say "\nINVALID INPUT";
+                        sleep 2;
+                        system ("clear");
+                }
+        }
+}
+
+sub populateArray {
+        my $i = 0;
+        while (defined $employees[$i][0]) {
+                $i++;
+        }
+        $employees[$i][0] = $EID;
+        $employees[$i][1] = $department;
+        $employees[$i][2] = $serviceYears;
+}
+
+sub printService{
+        my $totalService = 0;
+        my $i = 0;
+        while (defined $employees[$i][0]) {
+                if ($employees[$i][1] == $department) {
+                        $totalService = $totalService + $employees[$i][2];
+                }
+                $i++;
+        }
+        say "Department $department\'s total experience is $totalService years.";
+        say "Press enter to continue.";
+        <STDIN>;
+        system ("clear");
+}
