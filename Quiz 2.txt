@@ -10,7 +10,7 @@ use strict;
 use warnings;
 
 my @employees;
-my ($continue,$EID,$serviceYears,$deptNumber,$department,$checkDept);
+my ($continue,$EID,$serviceYears,$department,$checkDept);
 use constant YES => 1;
 
 sub main {
