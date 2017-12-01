@@ -47,7 +47,7 @@ sub setContinue {
         } else {
                 $continue = 1
         }
-        system ("clear")
+        system ("clear");
 }
 
 sub checkDepartment {
@@ -76,7 +76,7 @@ sub setDepartment {
                         system ("clear");
                 }
         }
-        system ("clear")
+        system ("clear");
 }
 
 sub addEmployee {
