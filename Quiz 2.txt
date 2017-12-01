@@ -82,6 +82,7 @@ sub setDepartment {
 sub addEmployee {
         my $check = -1;
         $EID = -1;
+		my $i = 0;
         while ($check != YES) {
                 while ($EID !~ /[0-9]/ || $EID < 1 || $EID > 5000) {
                         say "Please enter employee's ID number.";
@@ -92,7 +93,6 @@ sub addEmployee {
                                 system ("clear");
                         }
                 }
-                my $i = 0;
                 while (defined $employees[$i][0]) {
                         if ($employees[$i][0] == $EID) {
                                 say "\nEmployee already entered.";
@@ -105,6 +105,7 @@ sub addEmployee {
                 if ($EID != -1) {
                         $check = 1;
                 }
+				$i = 0;
         }
         system ("clear");
 }
